@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Allons-y! French Coaching</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --blue: #2563EB;
+    --blue-light: #EFF6FF;
+    --blue-dark: #1E3A8A;
+    --text: #1A1A2E;
+    --muted: #6B7280;
+    --border: #E5E7EB;
+    --white: #FFFFFF;
+    --bg: #FAFAFA;
+  }
+
+  body { font-family: 'Inter', sans-serif; color: var(--text); background: var(--white); line-height: 1.6; }
+
+  /* NAV */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(255,255,255,0.95); backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 64px;
+  }
+  .nav-brand { font-family: 'Playfair Display', serif; font-size: 1.25rem; color: var(--blue-dark); font-weight: 700; }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a { text-decoration: none; color: var(--muted); font-size: 0.9rem; font-weight: 500; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--blue); }
+  .nav-cta { background: var(--blue); color: white; padding: 0.5rem 1.25rem; border-radius: 6px; text-decoration: none; font-size: 0.875rem; font-weight: 600; transition: background 0.2s; }
+  .nav-cta:hover { background: var(--blue-dark); }
+
+  /* HERO */
+  .hero {
+    padding: 6rem 2rem 5rem;
+    max-width: 760px; margin: 0 auto; text-align: center;
+  }
+  .hero-tag {
+    display: inline-block;
+    background: var(--blue-light); color: var(--blue);
+    font-size: 0.8rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
+    padding: 0.35rem 1rem; border-radius: 20px; margin-bottom: 1.5rem;
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.2rem, 5vw, 3.5rem);
+    line-height: 1.15; color: var(--text); margin-bottom: 1.25rem;
+  }
+  .hero h1 em { color: var(--blue); font-style: italic; }
+  .hero p { font-size: 1.125rem; color: var(--muted); max-width: 580px; margin: 0 auto 2.5rem; }
+  .hero-actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+  .btn-primary { background: var(--blue); color: white; padding: 0.85rem 2rem; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 1rem; transition: background 0.2s; }
+  .btn-primary:hover { background: var(--blue-dark); }
+  .btn-secondary { background: white; color: var(--blue); border: 2px solid var(--blue); padding: 0.85rem 2rem; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 1rem; transition: all 0.2s; }
+  .btn-secondary:hover { background: var(--blue-light); }
+
+  /* DIVIDER */
+  .divider { border: none; border-top: 1px solid var(--border); margin: 0; }
+
+  /* SECTION SHARED */
+  section { padding: 5rem 2rem; }
+  .section-inner { max-width: 900px; margin: 0 auto; }
+  .section-label { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--blue); margin-bottom: 0.75rem; }
+  .section-title { font-family: 'Playfair Display', serif; font-size: clamp(1.75rem, 3.5vw, 2.5rem); color: var(--text); margin-bottom: 1rem; }
+  .section-sub { font-size: 1.05rem; color: var(--muted); max-width: 600px; margin-bottom: 3rem; }
+
+  /* SERVICES */
+  .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
+  .service-card {
+    border: 1px solid var(--border); border-radius: 12px; padding: 2rem;
+    background: white; transition: box-shadow 0.2s, border-color 0.2s;
+  }
+  .service-card:hover { box-shadow: 0 8px 24px rgba(37,99,235,0.1); border-color: var(--blue); }
+  .service-card.featured { border-color: var(--blue); background: var(--blue-light); }
+  .service-tag { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--blue); margin-bottom: 0.75rem; }
+  .service-card h3 { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--text); margin-bottom: 0.5rem; }
+  .service-card .tagline { font-size: 0.9rem; color: var(--muted); font-style: italic; margin-bottom: 1.25rem; }
+  .service-card p { font-size: 0.95rem; color: var(--muted); margin-bottom: 1.5rem; line-height: 1.7; }
+  .service-for { font-size: 0.875rem; color: var(--text); font-weight: 500; padding: 0.75rem 1rem; background: white; border-radius: 8px; border: 1px solid var(--border); }
+  .service-for strong { color: var(--blue); display: block; margin-bottom: 0.25rem; }
+
+  /* HOW IT WORKS */
+  .how-bg { background: var(--bg); }
+  .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; }
+  .step { text-align: center; }
+  .step-num { width: 48px; height: 48px; border-radius: 50%; background: var(--blue); color: white; font-weight: 700; font-size: 1.1rem; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; }
+  .step h4 { font-weight: 600; font-size: 1rem; margin-bottom: 0.5rem; color: var(--text); }
+  .step p { font-size: 0.9rem; color: var(--muted); line-height: 1.6; }
+
+  /* PRICING */
+  .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.5rem; }
+  .price-card { border: 1px solid var(--border); border-radius: 12px; padding: 1.75rem; background: white; }
+  .price-card.highlight { border-color: var(--blue); }
+  .price-free { font-size: 1.5rem; font-weight: 700; color: var(--blue); margin-bottom: 0.25rem; }
+  .price-amount { font-size: 2rem; font-weight: 700; color: var(--text); margin-bottom: 0.25rem; }
+  .price-amount span { font-size: 1rem; font-weight: 400; color: var(--muted); }
+  .price-label { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.08em; font-weight: 600; color: var(--muted); margin-bottom: 0.75rem; }
+  .price-desc { font-size: 0.9rem; color: var(--muted); line-height: 1.6; margin-bottom: 1rem; }
+  .price-note { font-size: 0.8rem; color: var(--muted); font-style: italic; }
+  .coming-soon { background: var(--bg); border-radius: 8px; padding: 1rem; font-size: 0.875rem; color: var(--muted); border: 1px dashed var(--border); }
+  .coming-soon strong { color: var(--text); display: block; margin-bottom: 0.25rem; }
+
+  /* ABOUT */
+  .about-inner { display: grid; grid-template-columns: 1fr 2fr; gap: 4rem; align-items: start; }
+  .about-aside { }
+  .about-initial {
+    width: 100px; height: 100px; border-radius: 50%;
+    background: var(--blue); color: white;
+    font-family: 'Playfair Display', serif; font-size: 2.5rem;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 1.5rem;
+  }
+  .about-facts { list-style: none; }
+  .about-facts li { font-size: 0.875rem; color: var(--muted); padding: 0.5rem 0; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 0.5rem; }
+  .about-facts li:last-child { border-bottom: none; }
+  .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--blue); flex-shrink: 0; }
+  .about-content p { font-size: 1rem; color: var(--muted); line-height: 1.8; margin-bottom: 1.25rem; }
+  .about-content p:last-child { margin-bottom: 0; }
+  .about-content strong { color: var(--text); }
+
+  /* TESTIMONIALS */
+  .test-bg { background: var(--bg); }
+  .test-placeholder { text-align: center; padding: 3rem; border: 2px dashed var(--border); border-radius: 12px; }
+  .test-placeholder p { color: var(--muted); font-style: italic; }
+
+  /* CTA BANNER */
+  .cta-banner {
+    background: var(--blue-dark); color: white;
+    text-align: center; padding: 5rem 2rem;
+  }
+  .cta-banner h2 { font-family: 'Playfair Display', serif; font-size: clamp(1.75rem, 3vw, 2.5rem); margin-bottom: 1rem; }
+  .cta-banner p { font-size: 1.05rem; opacity: 0.8; max-width: 520px; margin: 0 auto 2.5rem; }
+  .btn-white { background: white; color: var(--blue-dark); padding: 0.85rem 2rem; border-radius: 8px; text-decoration: none; font-weight: 700; font-size: 1rem; display: inline-block; transition: opacity 0.2s; }
+  .btn-white:hover { opacity: 0.9; }
+  .cta-email { margin-top: 1.25rem; opacity: 0.65; font-size: 0.9rem; }
+
+  /* FOOTER */
+  footer { padding: 2rem; text-align: center; border-top: 1px solid var(--border); }
+  footer p { font-size: 0.85rem; color: var(--muted); }
+
+  /* RESPONSIVE */
+  @media (max-width: 680px) {
+    .nav-links { display: none; }
+    .about-inner { grid-template-columns: 1fr; gap: 2rem; }
+    .about-initial { width: 72px; height: 72px; font-size: 1.75rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-brand">Allons-y!</div>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#how">How it works</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+    <li><a href="#about">About</a></li>
+  </ul>
+  <a href="mailto:cmilot@gmail.com" class="nav-cta">Book a free consult</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-tag">French Coaching · One-on-one · Virtual</div>
+  <h1>You already speak more French<br><em>than you think.</em></h1>
+  <p>Personalized coaching for professionals who need to work, communicate, or be evaluated in French — at their own pace, on their own terms.</p>
+  <div class="hero-actions">
+    <a href="mailto:cmilot@gmail.com" class="btn-primary">Book your free consultation</a>
+    <a href="#services" class="btn-secondary">See how it works</a>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="section-inner">
+    <div class="section-label">Services</div>
+    <h2 class="section-title">Find the right fit for you</h2>
+    <p class="section-sub">Two programs, one approach: personalized, judgment-free coaching designed around how you learn.</p>
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-tag">Everyday French</div>
+        <h3>Everyday French</h3>
+        <p class="tagline">For those who want to feel at home in French</p>
+        <p>Whether you're starting from scratch or picking up where you left off, this program helps you build real confidence in French — the kind you can actually use. Hold conversations, express yourself clearly, and feel comfortable in everyday situations.</p>
+        <div class="service-for">
+          <strong>This is for you if:</strong>
+          You want to speak French more confidently in daily life, at your own pace, without the pressure of an exam.
+        </div>
+      </div>
+      <div class="service-card featured">
+        <div class="service-tag">Workplace French</div>
+        <h3>Workplace French</h3>
+        <p class="tagline">For professionals who mean business</p>
+        <p>Designed for professionals navigating bilingual work environments. Whether you're aiming for BBB, working toward CBC, or want to feel more confident presenting or responding in French at work — this program meets you where you are.</p>
+        <div class="service-for">
+          <strong>This is for you if:</strong>
+          You work in a bilingual environment, have an evaluation on the horizon, or simply want to show up more confidently in French at work.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- HOW IT WORKS -->
+<section id="how" class="how-bg">
+  <div class="section-inner">
+    <div class="section-label">How it works</div>
+    <h2 class="section-title">Simple from start to finish</h2>
+    <p class="section-sub">No surprises, no pressure. Here's exactly what happens.</p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <h4>Book a free consult</h4>
+        <p>Reach out by email. We'll set up a quick 15-minute call on Teams — just a chance to meet and see if we're a good fit.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <h4>We assess where you are</h4>
+        <p>Your first full session is relaxed and conversational — I listen, you talk, and we figure out your starting point together.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <h4>We build your plan</h4>
+        <p>I tailor an approach around your pace, your goals, and your learning style. No generic curriculum — just what works for you.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <h4>We get to work</h4>
+        <p>Sessions run 55 to 60 minutes on Microsoft Teams. You'll leave each one having learned something real.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- PRICING -->
+<section id="pricing">
+  <div class="section-inner">
+    <div class="section-label">Pricing</div>
+    <h2 class="section-title">Straightforward, no surprises</h2>
+    <p class="section-sub">Payment by e-transfer. Sessions booked directly by email.</p>
+    <div class="pricing-grid">
+      <div class="price-card">
+        <div class="price-free">Free</div>
+        <div class="price-label">Consultation</div>
+        <p class="price-desc">A 15-minute call on Teams to get to know each other, talk about your goals, and see if we're a good fit. No commitment required.</p>
+      </div>
+      <div class="price-card highlight">
+        <div class="price-amount">$75 <span>/ session</span></div>
+        <div class="price-label">Individual Session</div>
+        <p class="price-desc">55 to 60 minutes, one-on-one, on Microsoft Teams. Personalized to you, every single time.</p>
+      </div>
+      <div class="price-card">
+        <div class="coming-soon">
+          <strong>Coming soon</strong>
+          Mock exams, study guides, and practice resources designed specifically for the federal second language evaluation.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-inner">
+    <div class="section-label">About Catherine</div>
+    <div class="about-inner">
+      <div class="about-aside">
+        <div class="about-initial">CM</div>
+        <ul class="about-facts">
+          <li><span class="dot"></span>Native French speaker</li>
+          <li><span class="dot"></span>EEE — highest proficiency level</li>
+          <li><span class="dot"></span>15+ years in federal government</li>
+          <li><span class="dot"></span>Lived and studied in Germany</li>
+          <li><span class="dot"></span>One-on-one sessions only</li>
+          <li><span class="dot"></span>Virtual via Microsoft Teams</li>
+        </ul>
+      </div>
+      <div class="about-content">
+        <p><em>Some people learn languages in classrooms. Catherine learned them by living.</em></p>
+        <p>Growing up in a military family, home was never one place for long. By the time she was a teenager, she had landed in Germany — spending four formative years studying in French, English, and German, surrounded by people from every corner of the world. Languages weren't a subject. They were survival, connection, and sometimes, frustration.</p>
+        <p>That experience taught her something no classroom could: what it truly feels like to not be understood — and how much it matters to have a safe space to try anyway.</p>
+        <p>Catherine's sessions are <strong>judgment-free by design</strong>. Her students come in nervous and leave at ease — because she has been exactly where they are.</p>
+        <p>Today, Catherine brings over 15 years of federal government experience and a firsthand understanding of what it means to work in a bilingual environment. She saw the frustration of people who had been through the system and come out defeated — budgets that didn't stretch far enough, teachers whose style didn't click, programs that moved at someone else's pace. People who had tried, felt lost, and quietly given up.</p>
+        <p><strong>She built something different.</strong></p>
+        <p>Before achieving EEE — the highest rating across all three components of the government language evaluation: reading, writing, and oral — she sat the oral exam three times. On her own. No tutor, no program, no safety net. That journey is exactly why she teaches the way she does.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- TESTIMONIALS -->
+<section class="test-bg">
+  <div class="section-inner">
+    <div class="section-label">What students are saying</div>
+    <h2 class="section-title">Testimonials</h2>
+    <div class="test-placeholder">
+      <p>Testimonials coming soon.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CTA BANNER -->
+<section class="cta-banner">
+  <h2>Ready to take the first step?</h2>
+  <p>Whether you have questions or you're ready to get started, I'd love to hear from you. No pressure, no commitment.</p>
+  <a href="mailto:cmilot@gmail.com" class="btn-white">Book your free consultation</a>
+  <p class="cta-email">cmilot@gmail.com</p>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>&copy; 2026 Allons-y! French Coaching &nbsp;&middot;&nbsp; Your personalized path to French confidence &nbsp;&middot;&nbsp; cmilot@gmail.com</p>
+</footer>
+
+</body>
+</html>
